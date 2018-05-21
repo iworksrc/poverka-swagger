@@ -1,0 +1,792 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a Poverka  API aka ASUKMO",
+    "version" : "1.0.0",
+    "title" : "POVERKA API",
+    "contact" : {
+      "email" : "imail.for.iwork@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath" : "/api/v1/poverka",
+  "schemes" : [ "http", "https" ],
+  "host" : "localhost",
+  "securityDefinitions" : {
+    "BasicAuth" : {
+      "type" : "basic"
+    },
+    "X-Auth-Token" : {
+      "name" : "X-Auth-Token",
+      "type" : "apiKey",
+      "in" : "header"
+    }
+  },
+  "paths" : {
+    "/login" : {
+      "post" : {
+        "summary" : "login to app",
+        "description" : "send login/pass encrypted to secret string, rturns a secret X-Auth-Token",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "consumes" : [ "application/json", "application/xhtml+xml" ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Token"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    },
+    "/mi" : {
+      "get" : {
+        "summary" : "get all MI",
+        "operationId" : "getAllMI",
+        "description" : "get all available MI`s",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "id",
+          "description" : "id of MI, get a single MI",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "in" : "query",
+          "name" : "name",
+          "description" : "get by MI name",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "type",
+          "description" : "get MI by type",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "dateStart",
+          "description" : "start date of time period (if empty, get Records from all the time)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "dateEnd",
+          "description" : "date of end a time period (if empty, get now date)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "term",
+          "description" : "get by search term",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/MeasurngInstrument"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Not Found. No one MI by search params is found",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "post" : {
+        "summary" : "create new  MI",
+        "operationId" : "createNewMI",
+        "description" : "creates new MeasurmentInstrument",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "consumes" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "mi",
+          "description" : "create new MI",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/MeasurngInstrument"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          },
+          "400" : {
+            "description" : "bad request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "put" : {
+        "summary" : "update MI",
+        "description" : "update MI",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "consumes" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "mi",
+          "description" : "create new MI",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/MeasurngInstrument"
+          }
+        } ],
+        "responses" : {
+          "202" : {
+            "description" : "Accepted",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "400" : {
+            "description" : "bad request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Not Found. Not found MI for update",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "delete" : {
+        "summary" : "delete MI by id",
+        "description" : "delete MI by id",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "id",
+          "description" : "id MI for delete",
+          "type" : "integer",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Not Found. Not found MI for delete",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      }
+    },
+    "/record/{id}" : {
+      "get" : {
+        "summary" : "get record by id",
+        "description" : "get record by id",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of Record",
+          "type" : "integer",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Record"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Not Found. Not found Record by this id",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "delete" : {
+        "summary" : "delete Record by id",
+        "description" : "delete Record by id",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of Record",
+          "type" : "integer",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Not Found. Not found Record by this id for delete",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      }
+    },
+    "/record" : {
+      "get" : {
+        "summary" : "get records by query",
+        "description" : "get MI Records of poverka by some parameters",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "id",
+          "description" : "id of Record, get a single Record",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "in" : "query",
+          "name" : "miid",
+          "description" : "id of MI, get all Records of this MI",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "in" : "query",
+          "name" : "dateStart",
+          "description" : "start date of time period (if empty, get Records from all the time)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "dateEnd",
+          "description" : "sd",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "term",
+          "description" : "term for search record",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Record"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Not Found. No one Record found by query params",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "post" : {
+        "summary" : "add Record to MI",
+        "description" : "add Record to MI by miid",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "record",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Record"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "put" : {
+        "summary" : "update Record",
+        "description" : "update Record",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "record",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Record"
+          }
+        } ],
+        "responses" : {
+          "202" : {
+            "description" : "Accepted"
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "delete" : {
+        "summary" : "delete Record",
+        "description" : "delete Record",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "id",
+          "description" : "id of Record, delete a single Record",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "in" : "query",
+          "name" : "miid",
+          "description" : "id of MI, delete all Records of this MI",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "in" : "query",
+          "name" : "dateStart",
+          "description" : "start date of time period (if empty, get Records from all the time)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "dateEnd",
+          "description" : "end date of time period (if empty )",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "query",
+          "name" : "term",
+          "description" : "asas",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "integer",
+              "description" : "number of deleted objects"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      }
+    },
+    "/employee/{id}" : {
+      "get" : {
+        "summary" : "get Employee by id",
+        "description" : "get Employee by id",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "type" : "integer",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Employee"
+            }
+          },
+          "204" : {
+            "description" : "No Content. No math found for is id",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "delete" : {
+        "summary" : "delete Employee by id",
+        "description" : "delete Employee by id",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "type" : "integer",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "204" : {
+            "description" : "No Content. No math found for is id",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      }
+    },
+    "/employee" : {
+      "get" : {
+        "summary" : "get Employess mached by term",
+        "description" : "get Employess mached by term",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "id",
+          "type" : "integer",
+          "required" : false
+        }, {
+          "in" : "query",
+          "name" : "tenantid",
+          "type" : "integer",
+          "required" : false
+        }, {
+          "in" : "query",
+          "name" : "name",
+          "type" : "string",
+          "required" : false
+        }, {
+          "in" : "query",
+          "name" : "lastname",
+          "type" : "string",
+          "required" : false
+        }, {
+          "in" : "query",
+          "name" : "thirdname",
+          "type" : "string",
+          "required" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Employee"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      },
+      "post" : {
+        "summary" : "create bunch of Employess",
+        "description" : "create bunch of Employess",
+        "produces" : [ "application/json", "application/xhtml+xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "employess",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/Employee"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable Entity. Not created one or more Employess",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "X-Auth-Token" : [ ]
+        } ]
+      }
+    }
+  },
+  "definitions" : {
+    "MeasurngInstrument" : {
+      "required" : [ "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 38768
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Вольтметр"
+        },
+        "type" : {
+          "$ref" : "#/definitions/MIType"
+        },
+        "type_refinment" : {
+          "type" : "string",
+          "example" : "ВЭ-57М"
+        },
+        "invnum" : {
+          "type" : "string",
+          "example" : "В-091"
+        },
+        "description" : {
+          "type" : "string",
+          "example" : "короткое описание прибора"
+        }
+      }
+    },
+    "MIType" : {
+      "required" : [ "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 3475
+        },
+        "mi_name" : {
+          "type" : "string",
+          "description" : "Наименование СИ в госреестре РФ",
+          "example" : "Преобразователи измерительные трехканальные"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Обозначение типа СИ в госреестре РФ",
+          "example" : "Е3854ЭЛ"
+        },
+        "gosnum" : {
+          "type" : "string",
+          "description" : "номер типа СИ в госреестре РФ",
+          "example" : "70318-18"
+        },
+        "interval" : {
+          "type" : "string",
+          "description" : "межповерочный интервал (в месяцах)",
+          "example" : "12"
+        }
+      }
+    },
+    "Employee" : {
+      "required" : [ "id", "tenantid" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 1214
+        },
+        "tenantid" : {
+          "type" : "integer",
+          "description" : "id of organisation (tenant)",
+          "example" : 3
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Иван"
+        },
+        "lastname" : {
+          "type" : "string",
+          "example" : "Иванов"
+        },
+        "thirdname" : {
+          "type" : "string",
+          "example" : "Иванович"
+        },
+        "login" : {
+          "type" : "string",
+          "example" : "ivanov.ii"
+        },
+        "passord" : {
+          "type" : "string",
+          "example" : "h6vD90sIpm"
+        },
+        "role" : {
+          "type" : "string",
+          "example" : "admin"
+        }
+      }
+    },
+    "Record" : {
+      "required" : [ "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 82432
+        },
+        "employeid" : {
+          "type" : "integer",
+          "description" : "id of Employee who has do poverka",
+          "example" : 12
+        },
+        "data" : {
+          "type" : "string",
+          "description" : "check date",
+          "example" : "12.08.2015"
+        },
+        "miid" : {
+          "type" : "integer",
+          "description" : "id of MI",
+          "example" : 45
+        }
+      }
+    },
+    "ErrorMessage" : {
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "example" : "404"
+        },
+        "errorcount" : {
+          "type" : "integer",
+          "example" : 2
+        },
+        "messages" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "Token" : {
+      "properties" : {
+        "token" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

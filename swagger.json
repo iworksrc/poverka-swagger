@@ -769,6 +769,10 @@
           "type" : "string",
           "example" : "404"
         },
+        "message" : {
+          "type" : "string",
+          "example" : "MI not found"
+        },
         "errorcount" : {
           "type" : "integer",
           "example" : 2

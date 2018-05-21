@@ -708,26 +708,30 @@
       }
     },
     "Employee" : {
-      "required" : [ "id", "tenantid" ],
+      "required" : [ "tenantid" ],
       "properties" : {
         "id" : {
-          "type" : "integer",
-          "example" : 1214
+          "description" : "Идентификатор объекта в БД (может быть и integer)",
+          "type" : "string",
+          "example" : "1214-GT-76F55"
         },
         "tenantid" : {
-          "type" : "integer",
-          "description" : "id of organisation (tenant)",
-          "example" : 3
+          "description" : "Идентификатор организации к которой принадлежит служащий (tenant)",
+          "type" : "string",
+          "example" : "38-HG-129917"
         },
         "name" : {
+          "description" : "Имя",
           "type" : "string",
           "example" : "Иван"
         },
         "lastname" : {
+          "description" : "Фамилия",
           "type" : "string",
           "example" : "Иванов"
         },
         "thirdname" : {
+          "description" : "Отчество",
           "type" : "string",
           "example" : "Иванович"
         },

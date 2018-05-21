@@ -652,6 +652,11 @@
           "type" : "integer",
           "example" : 8
         },
+        "tenantid" : {
+          "description" : "Идентификатор организации к которой принадлежит средство измерения (tenant)",
+          "type" : "integer",
+          "example" : 4
+        },
         "name" : {
           "description" : "Наименование средства измерения или его наиболее близкой группы",
           "type" : "string",
@@ -705,6 +710,19 @@
           "description" : "межповерочный интервал (в месяцах)",
           "type" : "string",
           "example" : "12"
+        }
+      }
+    },
+    "Tenant" : {
+      "required" : [ "name" ],
+      "properties" : {
+        "id" : {
+          "description" : "Идентификатор в БД",
+          "type" : "integer",
+          "example" : 1
+        },
+        "name" : {
+          "description" : "Наименование организации"
         }
       }
     },

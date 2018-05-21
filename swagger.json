@@ -649,8 +649,8 @@
       "properties" : {
         "id" : {
           "description" : "Идентификатор объекта в БД (может быть и integer)",
-          "type" : "string",
-          "example" : "38768-FR-30039"
+          "type" : "integer",
+          "example" : 8
         },
         "name" : {
           "description" : "Наименование средства измерения или его наиболее близкой группы",
@@ -679,13 +679,14 @@
     },
     "MIType" : {
       "description" : "Тип средства измерения в госреестре (прототип взят из госреестра)",
+      "required" : [ "gosnum", "interval" ],
       "properties" : {
         "id" : {
           "description" : "Идентификатор объекта в БД (может быть и integer)",
-          "type" : "string",
-          "example" : "3475-RTF545GF-984KK"
+          "type" : "integer",
+          "example" : 1
         },
-        "mi_name" : {
+        "group" : {
           "description" : "Наименование СИ в госреестре РФ",
           "type" : "string",
           "example" : "Преобразователи измерительные трехканальные"
@@ -712,13 +713,13 @@
       "properties" : {
         "id" : {
           "description" : "Идентификатор объекта в БД (может быть и integer)",
-          "type" : "string",
-          "example" : "1214-GT-76F55"
+          "type" : "integer",
+          "example" : 3
         },
         "tenantid" : {
           "description" : "Идентификатор организации к которой принадлежит служащий (tenant)",
-          "type" : "string",
-          "example" : "38-HG-129917"
+          "type" : "integer",
+          "example" : 4
         },
         "name" : {
           "description" : "Имя",
@@ -757,13 +758,13 @@
       "properties" : {
         "id" : {
           "description" : "Идентификатор объекта в БД (может быть и integer)",
-          "type" : "string",
-          "example" : "82432"
+          "type" : "integer",
+          "example" : 82432
         },
         "employeid" : {
           "description" : "Идентификатор служащего проводившего поверку либо вносившего запись",
-          "type" : "string",
-          "example" : "12"
+          "type" : "integer",
+          "example" : 12
         },
         "date" : {
           "description" : "Дата проведения поверки",
@@ -772,8 +773,8 @@
         },
         "miid" : {
           "description" : "Идентификатор средства змерения поверка которого проводилась",
-          "type" : "string",
-          "example" : "45"
+          "type" : "integer",
+          "example" : 45
         }
       }
     },

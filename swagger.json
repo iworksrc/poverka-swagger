@@ -645,27 +645,28 @@
   },
   "definitions" : {
     "MeasurngInstrument" : {
-      "required" : [ "id" ],
+      "description" : "Экземпляр средства измерения",
       "properties" : {
         "id" : {
-          "description" : "Идентификатор объекта в БД",
-          "type" : "integer",
-          "example" : 38768
+          "description" : "Идентификатор объекта в БД (может быть и integer)",
+          "type" : "string",
+          "example" : "38768-FR-30039"
         },
         "name" : {
-          "description" : "Наименование средства измерения",
+          "description" : "Наименование средства измерения или его наиболее близкой группы",
           "type" : "string",
           "example" : "Вольтметр"
         },
         "type" : {
-          "description" : "Тип средства измерения госреестре",
           "$ref" : "#/definitions/MIType"
         },
         "type_refinment" : {
+          "description" : "Уточнение типа, используется если отсутствует значение в поле type",
           "type" : "string",
           "example" : "ВЭ-57М"
         },
         "invnum" : {
+          "description" : "Инвентарный номер прибора внутри организации",
           "type" : "string",
           "example" : "В-091"
         },
@@ -676,30 +677,31 @@
       }
     },
     "MIType" : {
-      "required" : [ "id" ],
+      "description" : "Тип средства измерения в госреестре (прототип взят из госреестра)",
       "properties" : {
         "id" : {
-          "type" : "integer",
-          "example" : 3475
+          "description" : "Идентификатор объекта в БД (может быть и integer)",
+          "type" : "string",
+          "example" : "3475-RTF545GF-984KK"
         },
         "mi_name" : {
-          "type" : "string",
           "description" : "Наименование СИ в госреестре РФ",
+          "type" : "string",
           "example" : "Преобразователи измерительные трехканальные"
         },
         "name" : {
-          "type" : "string",
           "description" : "Обозначение типа СИ в госреестре РФ",
+          "type" : "string",
           "example" : "Е3854ЭЛ"
         },
         "gosnum" : {
-          "type" : "string",
           "description" : "номер типа СИ в госреестре РФ",
+          "type" : "string",
           "example" : "70318-18"
         },
         "interval" : {
-          "type" : "string",
           "description" : "межповерочный интервал (в месяцах)",
+          "type" : "string",
           "example" : "12"
         }
       }

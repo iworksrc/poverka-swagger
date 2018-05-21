@@ -648,14 +648,17 @@
       "required" : [ "id" ],
       "properties" : {
         "id" : {
+          "description" : "Идентификатор объекта в БД",
           "type" : "integer",
           "example" : 38768
         },
         "name" : {
+          "description" : "Наименование средства измерения",
           "type" : "string",
           "example" : "Вольтметр"
         },
         "type" : {
+          "description" : "Тип средства измерения госреестре",
           "$ref" : "#/definitions/MIType"
         },
         "type_refinment" : {

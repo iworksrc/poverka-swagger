@@ -753,44 +753,49 @@
       }
     },
     "Record" : {
-      "required" : [ "id" ],
+      "required" : [ "employeid", "date", "miid" ],
       "properties" : {
         "id" : {
-          "type" : "integer",
-          "example" : 82432
+          "description" : "Идентификатор объекта в БД (может быть и integer)",
+          "type" : "string",
+          "example" : "82432"
         },
         "employeid" : {
-          "type" : "integer",
-          "description" : "id of Employee who has do poverka",
-          "example" : 12
-        },
-        "data" : {
+          "description" : "Идентификатор служащего проводившего поверку либо вносившего запись",
           "type" : "string",
-          "description" : "check date",
+          "example" : "12"
+        },
+        "date" : {
+          "description" : "Дата проведения поверки",
+          "type" : "string",
           "example" : "12.08.2015"
         },
         "miid" : {
-          "type" : "integer",
-          "description" : "id of MI",
-          "example" : 45
+          "description" : "Идентификатор средства змерения поверка которого проводилась",
+          "type" : "string",
+          "example" : "45"
         }
       }
     },
     "ErrorMessage" : {
       "properties" : {
         "code" : {
+          "description" : "HTTP response code",
           "type" : "string",
           "example" : "404"
         },
         "message" : {
+          "description" : "Информация об ошибке",
           "type" : "string",
           "example" : "MI not found"
         },
         "errorcount" : {
+          "description" : "Количество ошибок в переданном объекте (может быть null)",
           "type" : "integer",
           "example" : 2
         },
         "errors" : {
+          "description" : "Поля объекта в которых обнаружилась ошибка",
           "type" : "array",
           "items" : {
             "type" : "object"

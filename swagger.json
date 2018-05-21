@@ -799,7 +799,12 @@
           "type" : "array",
           "items" : {
             "type" : "object"
-          }
+          },
+          "example" : [ {
+            "id" : "not valid"
+          }, {
+            "tenantid" : "not valid"
+          } ]
         }
       }
     },

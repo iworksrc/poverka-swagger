@@ -736,14 +736,17 @@
           "example" : "Иванович"
         },
         "login" : {
+          "description" : "Логин для входа в сервис",
           "type" : "string",
           "example" : "ivanov.ii"
         },
-        "passord" : {
+        "password" : {
+          "description" : "Пароль для входа в сервис",
           "type" : "string",
           "example" : "h6vD90sIpm"
         },
         "role" : {
+          "description" : "Роль административных прав в системе (распространяется только на собственную организацию)",
           "type" : "string",
           "example" : "admin"
         }
